@@ -267,3 +267,4 @@ This is what the controller does in a swimming pool when `pool_mode: true` and t
 **Key idea:** In a pool you don’t have true navigation sensors, so safety comes from (a) keeping forward motion short and reversible, and (b) using the three cameras to detect “getting too close” and back away.
 
 # ocean-voyager
+# ocean-voyager
