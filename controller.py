@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """
-All-in-one controller program (single file)
+All-in-one controller program:
 
 Supports two modes:
   1) Raspberry Pi + PCA9685 + MLX90640 (I2C)
   2) Dry-run simulation (no hardware)
 
 Features included:
-  - Hardware Abstraction Layer (HAL) interfaces + implementations (Pi + DryRun)
+  - Hardware Abstraction Layer (HAL) interfaces and implementations (Pi + DryRun)
   - Explicit finite-state machine: SCAN → COARSE_ALIGN → FINE_ALIGN → APPROACH → VERIFY → DONE/ABORT
   - Concurrency:
       * Thermal capture thread (latest-frame buffer)
       * Verification worker thread (async verify requests)
       * Watchdog thread (failsafe stop if controller stalls)
-  - Logging + recording:
+  - Logging and recording:
       * events.jsonl (structured event stream)
       * optional thermal frame dumps (.npz) + summary stats
 
 Usage:
-  - Write a config template:
+  - Config template:
       python3 controller_all_in_one.py --write-config-template controller_config.json
 
   - Dry run:
@@ -45,7 +45,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-# Optional: OpenCV for camera capture + wall-guard vision
+# OpenCV for camera capture + wall-guard vision
 try:
     import cv2  # type: ignore
     HAS_CV2 = True
@@ -54,10 +54,7 @@ except Exception:
     HAS_CV2 = False
 
 
-
-# ============================================================
 # Utilities
-# ============================================================
 def clamp(x: float, lo: float, hi: float) -> float:
     return max(lo, min(hi, x))
 
@@ -93,9 +90,9 @@ def load_json(path: str) -> Dict[str, Any]:
         raise RuntimeError(f"Failed to parse JSON: {path}") from e
 
 
-# ============================================================
-# Recording / Logging
-# ============================================================
+
+# Recording
+
 class RunRecorder:
     def __init__(self, base_dir: str, enable_npz: bool, npz_every_n: int):
         self.base_dir = base_dir or "runs"
@@ -133,9 +130,9 @@ class RunRecorder:
         )
 
 
-# ============================================================
-# Blob detection + tracking
-# ============================================================
+
+# Blob detection and tracking
+
 @dataclass
 class Blob:
     id: int
@@ -231,9 +228,8 @@ def pick_target(blobs: List[Blob], tracker: TrackerState, max_jump_px: float, st
     return best if tracker.stable_count >= int(stable_required) else None
 
 
-# ============================================================
 # HAL Interfaces
-# ============================================================
+
 class ThermalCamera:
     def read(self) -> np.ndarray:
         raise NotImplementedError
@@ -271,9 +267,9 @@ class Verifier:
         return False, 0.0
 
 
-# ============================================================
+
 # Raspberry Pi HAL: PCA9685 + MLX90640
-# ============================================================
+
 def _import_pi_deps():
     try:
         import board  # type: ignore
@@ -433,9 +429,9 @@ class PiMLX90640Thermal(ThermalCamera):
         raise RuntimeError("MLX90640 read retries exceeded")
 
 
-# ============================================================
+
 # Dry-run HAL (simulation)
-# ============================================================
+
 class DryRunThermal(ThermalCamera):
     """Simulated 24x32 thermal frames with a moving warm blob + noise."""
     def __init__(self, ambient_c: float, blob_c: float, noise_c: float, drift: float):
@@ -493,9 +489,8 @@ class DryRunVerifier(Verifier):
         return ok, conf
 
 
-# ============================================================
 # Threads: thermal capture, verification worker, watchdog
-# ============================================================
+
 class LatestValue:
     """Thread-safe latest value container."""
     def __init__(self):
@@ -596,13 +591,13 @@ class WatchdogThread(threading.Thread):
             time.sleep(0.05)
 
 
-# ============================================================
+
 # Config
-# ============================================================
+
 @dataclass
 class Config:
     # mode
-    hal: str  # "pi_pca9685" or "dryrun"
+    hal: str  # pi_pca9685 or dryrun
 
     # recording
     run_base_dir: str
@@ -680,7 +675,7 @@ class Config:
 
 
 def config_template() -> Dict[str, Any]:
-    # Reasonable defaults + explicit TBD fields where needed
+    # Reasonable defaults and explicit TBD fields where needed
     return {
         "hal": "TBD (pi_pca9685 or dryrun)",
         "run_base_dir": "runs",
@@ -832,9 +827,9 @@ def parse_config(d: Dict[str, Any]) -> Config:
     )
 
 
-# ============================================================
+
 # Controller FSM
-# ============================================================
+
 class State:
     WALL_AVOID = "WALL_AVOID"
     SEARCH_PATTERN = "SEARCH_PATTERN"
@@ -1012,10 +1007,10 @@ class Controller:
                     return
 
 
-        # SEARCH_PATTERN (pool mode): open-loop rotate/step pattern to reduce wall impacts.
+        # SEARCH_PATTERN (pool mode): open-loop rotate and step pattern to reduce wall impacts.
         # - Rotates in place in alternating directions with pauses.
         # - Every N rotate cycles, performs a short forward step.
-        # - Continuously checks for a stable thermal target; if found, transitions to COARSE_ALIGN.
+        # - Continuously checks for a stable thermal target. if found then transition to COARSE_ALIGN.
         if self.ctx.state == State.SEARCH_PATTERN:
             if not self.cfg.pool_mode:
                 self._enter(State.SCAN, reason="search_pattern_disabled")
@@ -1150,8 +1145,8 @@ class Controller:
         if self.ctx.state == State.APPROACH:
             # In pool mode we avoid long straight runs:
             # - clamp forward command
-            # - pulse forward for short bursts with pauses to re-align / reduce wall risk
-            # - enforce a max continuous motion time (fails safe)
+            # - pulse forward for short bursts with pauses to re-align and reduce wall risk
+            # - enforce a max continuous motion time as fails safe
             if is_timeout(self.ctx, self.cfg.approach_timeout_s):
                 self.thr.stop()
                 self._enter(State.VERIFY, reason="approach_timeout")
@@ -1187,7 +1182,7 @@ class Controller:
             )
 
             if not self.cfg.pool_mode:
-                # Normal behavior (open water / bench tests)
+                # Normal behavior for open water and bench tests
                 self.thr.set(yaw=yaw, forward=self.cfg.forward_cmd)
             else:
                 # Pool behavior: pulse forward, then pause
@@ -1274,9 +1269,7 @@ class Controller:
             return
 
 
-# ============================================================
 # Cameras (front/left/right) and wall-guard vision (optional)
-# ============================================================
 
 def _parse_cam_device(dev: Any) -> Any:
     """Accepts int index (0,1,2), string '/dev/video0' or '0', or None."""
@@ -1490,9 +1483,8 @@ def _wall_guard_debug_dump(recorder: "RunRecorder", cfg: "Config", ctx: "Control
         except Exception as e:
             recorder.write_event({"event": "wall_guard_debug_error", "camera": name, "error": str(e)})
 
-# ============================================================
 # HAL factory
-# ============================================================
+
 @dataclass
 class HALBundle:
     thermal: ThermalCamera
@@ -1540,9 +1532,8 @@ def make_hal(cfg: Config) -> HALBundle:
     raise ValueError(f"Unknown hal mode: {cfg.hal}")
 
 
-# ============================================================
 # Main
-# ============================================================
+
 def write_template(path: str) -> None:
     p = Path(path)
     p.write_text(json.dumps(config_template(), indent=2), encoding="utf-8")
