@@ -45,7 +45,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-# Optional: OpenCV for camera capture + wall-guard vision
+# OpenCV for camera capture + wall-guard vision
 try:
     import cv2  # type: ignore
     HAS_CV2 = True
