@@ -1,0 +1,10 @@
+# Ocean Voyager v45 - Raspberry Pi hardware dependencies
+#
+# Install pool_base.txt first.
+#
+# Some Raspberry Pi packages such as Picamera2 and OpenCV are normally
+# best installed through Raspberry Pi OS / apt rather than pip.
+
+gpiozero>=2.0
+adafruit-circuitpython-mlx90640>=1.3
+Adafruit-Blinka>=9.0

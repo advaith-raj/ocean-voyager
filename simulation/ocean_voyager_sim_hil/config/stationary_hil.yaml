@@ -1,0 +1,46 @@
+runtime:
+  mode: stationary_hil
+sources:
+  thermal: sim
+  camera: sim
+  motors: log_only
+sensors:
+  thermal:
+    max_range_m: 4.0
+    fov_deg: 55
+    threshold_delta_c: 0.25
+    scan_min_deg: -75
+    scan_max_deg: 75
+    scan_step_deg: 15
+    noise_std_c: 0.03
+  camera:
+    max_range_m: 3.5
+    fov_deg: 75
+    mount_angles_deg:
+      front: 0
+      left: 75
+      right: -75
+mission:
+  hil_steps: 5
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.50
+  verify_distance_m: 0.75
+vision_model:
+  type: mock
+logging:
+  base_output_dir: outputs
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - thermal
+    - camera_array
+    - pan_servo
+    - vision_model
+    - motors
+    - wall_guard
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true

@@ -1,0 +1,25 @@
+scenario_name: 21_pool_single_bottle_return_home
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+objects:
+  - id: bottle_001
+    type: bottle
+    x: 2.4
+    y: 0.8
+    thermal_delta_c: 1.6
+    radius_m: 0.15
+    expected: confirm_waste

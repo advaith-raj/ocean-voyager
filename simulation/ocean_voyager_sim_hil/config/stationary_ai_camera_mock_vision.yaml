@@ -1,0 +1,70 @@
+runtime:
+  mode: stationary_ai_camera_mock_vision
+sources:
+  thermal: sim
+  camera: rpicam_ai_camera
+  motors: log_only
+
+device_bus:
+  enabled: true
+  dir_name: device_bus
+  run_mode: stationary_ai_camera_mock_vision
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - thermal
+    - camera_array
+    - motors
+    - vision_model
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true
+
+sensors:
+  thermal:
+    resolution_w: 32
+    resolution_h: 24
+    fov_deg: 55
+    threshold_delta_c: 0.35
+    max_range_m: 2.0
+  camera:
+    backend: rpicam_still
+    camera_ids:
+      - front
+    require_all_cameras: true
+    rpicam_command: rpicam-still
+    camera_index: 0
+    timeout_ms: 1000
+    process_timeout_sec: 10
+    health_check_capture: true
+    list_cameras_first: true
+    nopreview: true
+    width: 640
+    height: 480
+    frame_width: 640
+    frame_height: 480
+    use_width_height_args: true
+
+motors:
+  arm_real_motors: false
+  neutral_pwm_us: 1500
+
+vision_model:
+  type: mock
+  confidence_by_type:
+    bottle: 0.90
+    seaweed: 0.75
+    glare: 0.60
+
+mission:
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.50
+  manual_hil_step_distance_m: 0.25
+  bearing_approach_forward: 0.22
+  bearing_approach_duration_s: 0.45
+
+logging:
+  base_output_dir: outputs/hardware_bringup

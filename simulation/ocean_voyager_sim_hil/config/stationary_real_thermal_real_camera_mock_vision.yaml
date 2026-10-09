@@ -1,0 +1,87 @@
+runtime:
+  mode: stationary_real_sensor_hil
+
+# Stationary real-sensor HIL:
+# - thermal is real MLX90640
+# - camera is real camera array
+# - motors are log-only
+# - operator manually moves the object closer when prompted
+sources:
+  thermal: real_mlx90640
+  camera: real_camera_array
+  motors: log_only
+
+device_bus:
+  enabled: true
+  dir_name: device_bus
+  run_mode: stationary_real_sensor_hil_mock_vision
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - thermal
+    - camera_array
+    - motors
+    - vision_model
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true
+
+sensors:
+  thermal:
+    model: mlx90640
+    i2c_bus: 1
+    i2c_frequency: 400000
+    resolution_w: 32
+    resolution_h: 24
+    fov_x_deg: 55
+    fov_y_deg: 35
+    fov_deg: 55
+    threshold_delta_c: 0.35
+    min_detectable_delta_c: 0.35
+    min_blob_pixels: 4
+    refresh_rate_hz: 8
+  camera:
+    camera_ids:
+      - front
+      - left
+      - right
+    require_all_cameras: false
+    width: 640
+    height: 480
+    frame_width: 640
+    frame_height: 480
+    fps: 10
+    front_device: 0
+    left_device: 1
+    right_device: 2
+
+motors:
+  controller: pca9685
+  arm_real_motors: false
+  left_channel: 0
+  right_channel: 1
+  neutral_pwm_us: 1500
+  min_pwm_us: 1100
+  max_pwm_us: 1900
+
+mission:
+  hil_steps: 8
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.35
+  manual_hil_step_distance_m: 0.25
+  bearing_approach_forward: 0.22
+  bearing_approach_duration_s: 0.45
+  wall_guard_enabled: false
+
+vision_model:
+  type: mock
+  confidence_by_type:
+    bottle: 0.90
+    seaweed: 0.78
+    glare: 0.70
+
+logging:
+  base_output_dir: outputs/hardware_bringup

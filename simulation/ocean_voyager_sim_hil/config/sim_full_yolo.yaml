@@ -1,0 +1,49 @@
+runtime:
+  mode: sim_full_yolo
+sources:
+  thermal: sim
+  camera: sim
+  motors: sim
+sensors:
+  thermal:
+    max_range_m: 4.0
+    fov_deg: 55
+    threshold_delta_c: 0.25
+    scan_min_deg: -75
+    scan_max_deg: 75
+    scan_step_deg: 15
+    noise_std_c: 0.03
+    seed: 11
+  camera:
+    max_range_m: 3.5
+    fov_deg: 75
+    mount_angles_deg:
+      front: 0
+      left: 75
+      right: -75
+wall_guard:
+  threshold_m: 0.45
+  caution_m: 0.85
+robot_dynamics:
+  max_speed_mps: 0.55
+  max_yaw_rate_dps: 95
+mission:
+  max_steps: 220
+  max_confirmed: 2
+  scan_every_steps: 3
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.25
+  verify_distance_m: 0.75
+  lane_spacing_m: 1.0
+  coverage_safety_offset_m: 0.55
+  wall_guard_enabled: true
+vision_model:
+  type: yolo
+  model_path: models/best.pt
+  confidence_threshold: 0.35
+  target_labels:
+    - waste
+    - bottle
+    - plastic
+logging:
+  base_output_dir: outputs

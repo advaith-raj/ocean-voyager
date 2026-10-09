@@ -1,268 +1,609 @@
-# Controller (All-in-One)
+# Ocean Voyager
 
-This repository provides a single-file controller program for a Raspberry Pi–based robot using:
+**Ocean Voyager** is an experimental autonomous surface vehicle (ASV) for low-cost marine monitoring, with a particular focus on detecting floating macro-plastic debris before it fragments into smaller particles.
 
-- **MLX90640** thermal camera over **I2C**
-- **PCA9685** 16‑channel PWM driver over **I2C** to command:
-  - two **ESC-driven thrusters**
-  - one **pan servo**
-- Optional **dry-run mode** (no hardware required)
+The project progressed from a fully simulated autonomous mission, through hardware-in-the-loop (HIL) testing, to a Raspberry Pi-based physical catamaran operating autonomously in a swimming pool.
 
-The program includes:
-- Hardware Abstraction Layer (HAL) for **Pi hardware** and **dry-run simulation**
-- Explicit finite-state machine (FSM): **SCAN → COARSE_ALIGN → FINE_ALIGN → APPROACH → VERIFY → DONE/ABORT**
-- Concurrency threads:
-  - Thermal capture thread (latest-frame buffer)
-  - Verification worker thread (async verify requests)
-  - Watchdog thread (failsafe stop if controller stalls)
-- Logging + recording:
-  - `events.jsonl` (structured event stream)
-  - optional thermal frame dumps (`.npz`) for debugging/analysis
+The current physical prototype integrates:
 
----
+- Raspberry Pi 4
+- RGB camera
+- MLX90640 thermal camera
+- YOLO-based visual object detection
+- dual water-jet propulsion
+- DRV8833 motor control
+- visual wall/collision detection
+- stochastic exploration
+- independent RGB and thermal detection
+- corroborated RGB/thermal sensor fusion
+- bounded target pursuit
+- automatic return to exploration
+- trajectory, sensor, and event logging
 
-## Files
-
-- `controller_all_in_one.py` — single-file controller implementation.
+This repository intentionally preserves both the **current implementation** and the **engineering progression that led to it**.
 
 ---
 
-## Quick start
+## 1. Project Goal
 
-### 1) Install dependencies (Raspberry Pi)
+Floating plastic is easier to identify and potentially recover while it remains macro-scale debris.
 
-Enable I2C:
-- `raspi-config` → **Interface Options** → **I2C** → Enable
+Ocean Voyager investigates whether a relatively inexpensive autonomous surface vehicle can:
 
-Install Python packages:
-```bash
-pip3 install numpy adafruit-blinka adafruit-circuitpython-pca9685 adafruit-circuitpython-mlx90640
-```
+1. autonomously explore a bounded water environment;
+2. detect candidate floating debris;
+3. combine complementary sensing modalities;
+4. investigate confirmed targets;
+5. recover from walls and collisions; and
+6. continue exploration without continuous human control.
 
-### 2) Generate a config template
-
-```bash
-python3 controller_all_in_one.py --write-config-template controller_config.json
-```
-
-### 3) Edit the config
-
-Open `controller_config.json` and replace **TBD** values. Minimum required fields:
-- `hal` → `pi_pca9685` or `dryrun`
-- `pca_address` → usually `0x40` (leave default unless yours is different)
-- `left_thruster_ch` → PCA9685 channel number (0–15)
-- `right_thruster_ch` → PCA9685 channel number (0–15)
-- `servo_ch` → PCA9685 channel number (0–15)
-
-Notes:
-- PCA9685 channels are printed on the board **0–15**.
-- ESC pulse defaults (`esc_min_us`, `esc_neutral_us`, `esc_max_us`) are common starting points; adjust if needed.
-
-### 4) Run
-
-#### Dry-run (no hardware)
-```bash
-python3 controller_all_in_one.py --config controller_config.json --hal dryrun
-```
-
-#### Raspberry Pi + PCA9685 + MLX90640
-```bash
-python3 controller_all_in_one.py --config controller_config.json --hal pi_pca9685
-```
+The current system is an experimental research prototype rather than a production marine vehicle.
 
 ---
 
-## Output (logs/recording)
+## 2. Development Path
 
-Each run creates a folder:
-```
-runs/<timestamp>/
-  events.jsonl
-  thermal_*.npz   (optional, if enabled)
-```
+Ocean Voyager was developed progressively:
 
-- `events.jsonl` contains one JSON object per line (state transitions, target acquisition, verify votes, watchdog trips, shutdown, etc.).
-- Thermal `.npz` dumps are enabled by:
-  - `save_npz: true`
-  - `npz_every_n: <N>`
+    simulation
+        |
+        v
+    scenario / robustness testing
+        |
+        v
+    Raspberry Pi execution
+        |
+        v
+    stationary HIL
+        |
+        v
+    RGB and thermal bring-up
+        |
+        v
+    propulsion calibration
+        |
+        v
+    closed-loop pool navigation
+        |
+        v
+    collision / recovery experiments
+        |
+        v
+    asynchronous latest-frame control
+        |
+        v
+    sustained autonomous exploration
+        |
+        v
+    RGB + thermal integration
+        |
+        v
+    corroborated sensor fusion
+        |
+        v
+    stochastic exploration
+        |
+        v
+    v45 physical autonomy
 
----
-
-## Hardware notes (PCA9685)
-
-- **VCC** (logic) should be **3.3V** on Raspberry Pi (so I2C pullups are 3.3V).
-- **SDA/SCL** connect to Pi I2C pins (GPIO2/GPIO3).
-- **V+** powers the servo/ESC signal headers (use an appropriate external supply/BEC).
-- Grounds must be common between **Pi**, **PCA9685**, and **motor/servo power**.
-
----
-
-## Customizing verification (AI camera)
-
-`Verifier.verify()` is currently a stub that always returns `(False, 0.0)` in the Pi hardware mode.
-To enable camera/model verification:
-- Implement a verifier class that captures an image and runs your model.
-- Return `(is_target: bool, confidence: float)`.
-
-The controller performs multiple verification “votes” (`verify_votes`) and accepts when
-`verify_accept_count` positives are reached.
-
----
-
-## Safety
-
-- The controller always attempts a safe shutdown: **thrusters neutral** + **servo parked**.
-- A watchdog thread will stop thrusters if the controller heartbeat stalls longer than `watchdog_timeout_s`.
-
-
-## Self-test (bring-up)
-
-Run a basic bring-up checklist (thermal read, servo sweep, thrusters neutral):
-```bash
-python3 controller_all_in_one.py --config controller_config.json --self-test
-```
-
-Optional: enable small motion pulses (use extreme caution, keep props clear):
-- Set `self_test_motion: true` in the config.
-- Adjust `self_test_forward_cmd`, `self_test_yaw_cmd`, and `self_test_pulse_s` as needed.
-
+See [`docs/experiments/`](docs/experiments/) for the detailed experimental progression.
 
 ---
 
-## Pool mode
+## 3. Two Software Generations
 
-If you are testing in a swimming pool **without GPS/IMU/encoders/obstacle sensors**, you cannot truly avoid walls in software.
-What you *can* do is reduce risk by preventing long straight runs and adding frequent stops.
+The repository contains two related but distinct software systems.
 
-Enable pool mode in the config:
-- `pool_mode: true`
+### 3.1 Simulation / HIL Platform
 
-Pool mode changes behavior mainly in **APPROACH**:
-- Limits forward thrust (`pool_forward_cmd_limit`)
-- Limits yaw command (`pool_max_yaw_cmd`)
-- Uses **forward bursts** (`pool_forward_burst_s`) followed by **pauses** (`pool_pause_s`)
-- If the robot has been moving continuously too long, it stops (and can optionally reverse briefly)
+Located at:
 
-### Recommended pool safety setup (strongly recommended)
-- Use a **tether line** (prevents runaway).
-- Add **soft bumpers** (pool noodles/foam around the hull).
-- Keep thrust low (`forward_cmd` ~ 0.15–0.25).
-- Use `--self-test` first.
+    simulation/ocean_voyager_sim_hil/
 
-### Why this doesn’t “guarantee” wall avoidance
-Without a sensor that can detect the wall (camera/sonar/bump switch) and without a heading/position estimate,
-the robot cannot know it is approaching the pool boundary. Pool mode only reduces the likelihood of impact by:
-- limiting continuous motion
-- inserting frequent stop/re-align opportunities
+This framework supports combinations of simulated and real components, including:
 
+- fully simulated missions
+- configurable environments
+- coverage planning
+- simulated thermal and RGB sensing
+- target detection and approach
+- voting and sensor-fusion experiments
+- return-to-home behavior
+- stationary HIL
+- real thermal + simulated vision
+- simulated thermal + real camera
+- real sensors + log-only motors
+- Raspberry Pi hardware adapters
+- automated scenario execution
+- pytest-based regression testing
+- replay and animation tools
 
-### Pool search pattern
+The framework preserves the earlier general-purpose architecture used before the physical pool controller became more specialized.
 
-When `pool_mode: true`, the controller starts in a **SEARCH_PATTERN** state before scanning/alignment.
-This state runs an open-loop motion pattern intended to reduce wall impacts in a pool:
+### 3.2 Physical Pool Autonomy
 
-- Rotate in place for `pool_search_rotate_s` seconds (small yaw command)
-- Pause for `pool_search_pause_s` seconds (stop and observe)
-- Rotate the other direction, pause
-- Every `pool_search_cycles_per_forward` rotate cycles, do a short forward step (`pool_search_forward_s`)
-- At any time, if a stable target is detected, it immediately transitions to **COARSE_ALIGN**
+The current physical controller is:
 
-Config knobs:
-- `pool_search_timeout_s`
-- `pool_search_rotate_cmd`, `pool_search_rotate_s`
-- `pool_search_pause_s`
-- `pool_search_forward_cmd`, `pool_search_forward_s`
-- `pool_search_cycles_per_forward`
+    src/pool/voyager_pool_v45.py
 
-This still does not “sense” walls; it only limits continuous motion and inserts frequent stop windows.
+The final lightweight prototype uses:
 
+    Raspberry Pi 4
+          |
+          v
+       DRV8833
+       /     \
+      v       v
+    Pump L   Pump R
 
----
+Perception is provided by:
 
-## Wall guard (pool boundary safety)
+    RGB Camera ----+
+                   |
+                   v
+              Fusion Logic ----> Target Behavior
+                   ^
+                   |
+    MLX90640 ------+
 
-Since your boat has **front / left / right** visual cameras, you can enable a vision-based “wall guard” reflex for pool tests.
-
-When enabled:
-- The controller reads frames from the 3 cameras.
-- It computes a “closeness” score per camera.
-- If the score exceeds a threshold **during forward motion phases** (APPROACH forward bursts and SEARCH_PATTERN forward steps), it enters **WALL_AVOID**:
-  - stop → short reverse + yaw away from the closest side
-  - then resumes `SEARCH_PATTERN` (pool mode) or `SCAN`
-
-### Enable (USB cameras example)
-
-```json
-"camera_enabled": true,
-"camera_front_device": 0,
-"camera_left_device": 1,
-"camera_right_device": 2,
-"wall_guard_enabled": true,
-"wall_guard_method": "flow",
-"wall_guard_threshold": 1.8
-```
-
-### Method options
-- `wall_guard_method: "flow"` (recommended): optical flow magnitude
-- `wall_guard_method: "edges"`: edge density fallback
-
-### Wall guard debug overlay (optional)
-
-To save annotated frames for tuning:
-```json
-"wall_guard_debug_overlay": true,
-"wall_guard_debug_trigger_only": true,
-"wall_guard_debug_max_hz": 2.0
-```
-
-Frames are written under your run directory:
-- `runs/<run-id>/wallguard_<ms>_<camera>.jpg`
-
-### Dependency
-OpenCV is required for camera + wall guard:
-```bash
-pip3 install opencv-python
-```
-On Raspberry Pi, you may prefer `python3-opencv` (apt) or `opencv-python-headless` (pip).
+The physical system uses experimentally calibrated differential thrust rather than assuming identical left and right propulsion.
 
 ---
 
-## Pool workflow (pictorial)
+## 4. Real-Time Architecture
 
-![Pool workflow diagram](pool_workflow_diagram_v3.png)
+Physical testing exposed an important issue: processing stale camera frames can cause navigation decisions to describe where the boat **was**, rather than where it is now.
 
-Download the diagram: `pool_workflow_diagram_v3.png`
+The pool software therefore evolved toward an asynchronous latest-frame architecture.
 
-### Pool workflow in plain English
+    CAMERA THREAD
+          |
+          | continuously replace
+          v
+    LATEST FRAME
+          |
+          v
+    CONTROL / PERCEPTION
+          |
+          v
+    REQUESTED MOTION
+          |
+          v
+    MOTOR EXECUTION
 
-This is what the controller does in a swimming pool when `pool_mode: true` and the wall-guard is enabled:
+Only the newest useful observation is needed by control; an ever-growing camera backlog is avoided.
 
-1) **SEARCH_PATTERN (safe reacquire)**
-   - The boat *does not* drive continuously.
-   - It alternates **rotate → pause**, and every few cycles it performs a **short forward step**.
-   - Goal: re-acquire a target while keeping motion bounded in a confined pool.
+See [`docs/architecture/`](docs/architecture/) for more detail.
 
-2) **SCAN (thermal/primary detection)**
-   - The sensor scan runs while the boat is rotating/sweeping.
-   - It looks for a **stable target candidate** (e.g., a hot/cold blob above threshold for multiple frames).
+---
 
-3) **ALIGN (coarse → fine)**
-   - The boat yaws to **center the target**.
-   - Coarse alignment makes larger corrections; fine alignment uses smaller corrections and a deadband to avoid oscillation.
+## 5. v45 Stochastic Exploration
 
-4) **APPROACH (pulsed forward motion)**
-   - In pool mode, approach is **forward burst → pause** with a conservative thrust limit.
-   - The pauses create frequent “checkpoints” to re-evaluate the target and keep the boat from building up speed.
+v45 replaces rigid repeated search behavior with configurable stochastic navigation.
 
-5) **VERIFY (camera-in-the-loop confirmation)**
-   - When the boat is close enough (target appears large), it captures images from the **front / left / right cameras**.
-   - A classifier/heuristic verifies whether it is **debris** (or a false detection).
-   - If rejected, the controller returns to safe search (SEARCH_PATTERN / SCAN).
+Each action specification has the form:
 
-6) **WALL GUARD (always-on safety overlay during forward phases)**
-   - Independently of the main state machine, the system reads front/left/right camera frames during *forward* motion phases.
-   - It computes a “wall closeness” score (default: optical flow magnitude).
-   - If triggered, it enters **WALL_AVOID**: **stop → reverse + yaw away → cooldown**, then resumes SEARCH_PATTERN/SCAN.
+    probability,min_duration,max_duration
 
-**Key idea:** In a pool you don’t have true navigation sensors, so safety comes from (a) keeping forward motion short and reversible, and (b) using the three cameras to detect “getting too close” and back away.
+A representative normal-navigation configuration is:
 
+    --normal-forward "0.70,2.0,12.0"
+    --normal-left "0.07,1,6.0"
+    --normal-right "0.17,1,6.0"
+    --normal-pause "0.06,0.2,4"
+
+This strongly favors meaningful forward traversal while allowing variable turns and pauses.
+
+Collision conditions use a separate distribution:
+
+    --collision-left "0.15,0.5,6.0"
+    --collision-right "0.45,1,6.0"
+    --collision-pause "0.4,0.5,3.0"
+
+The result is **constrained stochastic exploration**, not unconstrained random motor commands.
+
+A random seed can be supplied when reproducible action sampling is desired.
+
+---
+
+## 6. RGB + Thermal Perception
+
+The two sensing modalities operate independently.
+
+### RGB
+
+The RGB pipeline uses a trained YOLO model to identify candidate debris.
+
+The repository model is:
+
+    models/best.pt
+
+### Thermal
+
+The MLX90640 produces a 24 x 32 thermal array.
+
+Thermal processing searches for temperature anomalies relative to the observed thermal background.
+
+### Fusion
+
+Later controllers compare RGB and thermal evidence rather than allowing every isolated sensor event to interrupt navigation.
+
+Conceptually:
+
+    RGB DETECTION --------+
+                          |
+                          v
+                     CORROBORATE
+                          |
+                          v
+                     FUSED TARGET
+                          ^
+                          |
+    THERMAL DETECTION ----+
+
+Fusion can consider timing and estimated bearing agreement.
+
+This also makes the decision process auditable after a run.
+
+---
+
+## 7. Bounded Target Pursuit
+
+A sufficiently corroborated target can temporarily interrupt normal exploration.
+
+    EXPLORE
+       |
+       v
+    OBSERVE
+       |
+       v
+    RGB / THERMAL EVIDENCE
+       |
+       v
+    CORROBORATE
+       |
+       v
+    TARGET PURSUIT
+       |
+       | bounded duration
+       v
+    COOLDOWN
+       |
+       v
+    EXPLORE
+
+This prevents repeated detections of the same target from permanently taking over navigation.
+
+---
+
+## 8. Repository Structure
+
+    ocean-voyager/
+    |
+    +-- README.md
+    +-- .gitignore
+    |
+    +-- src/
+    |   +-- pool/
+    |       +-- voyager_pool_v45.py
+    |
+    +-- simulation/
+    |   +-- ocean_voyager_sim_hil/
+    |
+    +-- scripts/
+    |   +-- hardware/
+    |   +-- evaluation/
+    |   +-- visualization/
+    |
+    +-- models/
+    |   +-- best.pt
+    |   +-- MODEL_NOTES.md
+    |
+    +-- docs/
+    |   +-- architecture/
+    |   +-- experiments/
+    |   +-- figures/
+    |
+    +-- examples/
+    |   +-- pool_run_04/
+    |
+    +-- archive/
+    |   +-- pool_evolution/
+    |       +-- milestones/
+    |       +-- full_history/
+    |
+    +-- configs/
+    +-- tests/
+
+The historical pool controllers are intentionally separated from the current implementation.
+
+See [`archive/pool_evolution/`](archive/pool_evolution/) for the version history.
+
+---
+
+## 9. Installation
+
+The project was developed primarily with Python on Raspberry Pi 4.
+
+The historical simulation/HIL package includes environment specifications at:
+
+    simulation/ocean_voyager_sim_hil/requirements.txt
+    simulation/ocean_voyager_sim_hil/requirements_pi_cpu.txt
+    simulation/ocean_voyager_sim_hil/requirements_pi_hil.txt
+
+### Simulation Environment
+
+From the repository root:
+
+    cd simulation/ocean_voyager_sim_hil
+
+    python3 -m venv .venv
+    source .venv/bin/activate
+
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+
+The exact Raspberry Pi environment depends on whether real camera, thermal, GPIO, or inference hardware is being used.
+
+---
+
+## 10. Reproducing the Development Progression
+
+A useful way to explore the repository is to follow approximately the same sequence used during development.
+
+### Stage A — Simulation
+
+    cd simulation/ocean_voyager_sim_hil
+
+Inspect the available scenarios:
+
+    ls scenarios
+
+The simulation package contains scenario runners and configuration files for exercising mission logic without physical hardware.
+
+### Stage B — Regression Tests
+
+Within the simulation/HIL environment:
+
+    pytest -q
+
+The retained test suite covers areas including mission execution, configuration/world behavior, startup, sensor visibility, camera playback, Raspberry Pi camera configuration, and coordinate/pool behavior.
+
+### Stage C — Scenario Suite
+
+Relevant utilities include:
+
+    scripts/run_all_scenarios.py
+    scripts/run_build_0_5_pool_suite.py
+
+These exercise larger groups of configurations than individual unit/regression tests.
+
+### Stage D — Stationary HIL
+
+Useful programs include:
+
+    scripts/stationary_real_sensor_hil.py
+    scripts/manual_navigation_hil.py
+
+Stationary HIL allows real perception to be exercised before physical propulsion is enabled.
+
+### Stage E — Sensor Bring-Up
+
+Public-facing bring-up utilities are collected in:
+
+    scripts/hardware/
+
+including:
+
+    camera_bringup.py
+    thermal_bringup.py
+    hardware_bringup.py
+    vision_burst_test.py
+    combined_thermal_vision_burst_test.py
+    thermal_anomaly_test_v2.py
+
+### Stage F — Propulsion Testing
+
+Propulsion utilities include:
+
+    pump_gpio_test.py
+    pump_bathtub_test.py
+    pump_pool_manual_pulse.py
+    pump_pool_sequence_calibration.py
+    pump_pool_sequence_sensor_capture.py
+    pump_pool_sequence_visual_only.py
+
+The recommended progression is:
+
+    GPIO
+      |
+      v
+    individual pump
+      |
+      v
+    manual pulses
+      |
+      v
+    straight-line calibration
+      |
+      v
+    turn calibration
+      |
+      v
+    repeated pool sequences
+      |
+      v
+    autonomous navigation
+
+Motor timings should be recalibrated for any new physical build.
+
+### Stage G — Physical Controller History
+
+Selected milestone controllers are under:
+
+    archive/pool_evolution/milestones/
+
+The broader surviving source history is under:
+
+    archive/pool_evolution/full_history/
+
+These files show how physical observations changed the algorithms over time.
+
+### Stage H — Current Physical Controller
+
+The final physical controller is:
+
+    src/pool/voyager_pool_v45.py
+
+Before enabling active motors, verify the camera, thermal sensor, motor wiring, propulsion direction, and emergency-stop procedure on the actual platform.
+
+---
+
+## 11. Representative v45 Pool Command
+
+A successful experimental configuration used:
+
+    python src/pool/voyager_pool_v45.py \
+      --vision-mode active \
+      --thermal-mode active \
+      --model models/best.pt \
+      --normal-forward "0.70,2.0,12.0" \
+      --normal-left "0.07,1,6.0" \
+      --normal-right "0.17,1,6.0" \
+      --normal-pause "0.06,0.2,4" \
+      --collision-left "0.15,0.5,6.0" \
+      --collision-right "0.45,1,6.0" \
+      --collision-pause "0.4,0.5,3.0" \
+      --target-pursuit-max-sec 5 \
+      --target-cooldown-sec 30 \
+      --archive-rgb-every-frames 2 \
+      --output outputs/pool_v45_random_02
+
+These are experimental parameters for one physical prototype and should not be treated as universal calibration values.
+
+Paths must also be adjusted to the local installation.
+
+---
+
+## 12. Physical Demo / Replay
+
+A curated demonstration location is provided at:
+
+    examples/pool_run_04/
+
+The v45 visualization utility is:
+
+    scripts/visualization/render_pool_v45_sensor_animation_v1.py
+
+The replay/renderer is intended to make the autonomous behavior observable after a physical run by combining trajectory, sensor, and target-event information.
+
+---
+
+## 13. Historical Hardware Note
+
+The earlier simulation/HIL platform contains a PCA9685 / T200-style propulsion abstraction.
+
+That code is intentionally preserved because it documents an earlier phase of the architecture.
+
+It is **not** the propulsion system used by the final lightweight physical pool prototype.
+
+The final prototype uses miniature pumps through a DRV8833.
+
+---
+
+## 14. Testing Philosophy
+
+Ocean Voyager uses progressive validation.
+
+Instead of enabling the entire autonomy stack immediately, development moved through:
+
+- simulation
+- automated scenarios
+- Raspberry Pi execution
+- stationary HIL
+- thermal-only testing
+- RGB-only testing
+- combined sensor testing
+- log-only motor operation
+- manual propulsion calibration
+- controlled pool navigation
+- collision/recovery testing
+- autonomous exploration
+- target detection
+- multimodal fusion
+- bounded target pursuit
+
+This approach helps separate failures in perception, control, electronics, mechanics, and navigation.
+
+---
+
+## 15. Current Experimental Status
+
+The physical pool prototype has demonstrated:
+
+- autonomous movement
+- sustained exploration
+- visual boundary interaction
+- collision/recovery behavior
+- RGB target detection
+- thermal target detection
+- RGB/thermal fusion
+- bounded target pursuit
+- cooldown
+- return to exploration
+- trajectory and sensor replay
+
+The swimming pool remains a controlled environment.
+
+Open-water operation introduces additional challenges including:
+
+- wind
+- waves
+- currents
+- sunlight and reflections
+- larger localization uncertainty
+- waterproofing
+- communication range
+- power endurance
+- marine durability
+
+These remain future development areas.
+
+---
+
+## 16. Research Direction
+
+Ocean Voyager provides an experimental platform for studying:
+
+- autonomous surface robotics
+- environmental monitoring
+- marine plastic detection
+- edge AI
+- multimodal perception
+- RGB/thermal sensor fusion
+- uncertainty-aware target confirmation
+- adaptive exploration
+- resource-constrained autonomous systems
+- multi-vehicle monitoring
+
+Potential future work includes larger-scale testing, improved localization, environmental robustness, cooperative exploration, and deployment in more realistic marine environments.
+
+---
+
+## 17. Documentation
+
+Additional documentation:
+
+- [`docs/architecture/`](docs/architecture/) — software architecture
+- [`docs/experiments/`](docs/experiments/) — experimental progression
+- [`archive/pool_evolution/`](archive/pool_evolution/) — physical-controller history
+- [`examples/pool_run_04/`](examples/pool_run_04/) — curated physical-run example
+- `simulation/ocean_voyager_sim_hil/` — simulation/HIL documentation, scenarios, build reports, and tests
+
+---
+
+## Disclaimer
+
+Ocean Voyager is an experimental research prototype.
+
+Hardware configurations, motor timings, thresholds, perception parameters, and navigation settings were developed for a particular prototype and controlled test environment. They should be independently validated and recalibrated before use on different hardware or in different environments.

@@ -1,0 +1,46 @@
+scenario_name: 24_pool_multiple_objects_return_home
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+objects:
+  - id: bottle_001
+    type: bottle
+    x: 2.5
+    y: 0.9
+    thermal_delta_c: 1.7
+    radius_m: 0.15
+    expected: confirm_waste
+  - id: seaweed_001
+    type: seaweed
+    x: 3.8
+    y: -1.1
+    thermal_delta_c: 1.0
+    radius_m: 0.25
+    expected: reject_false_positive
+  - id: bottle_002
+    type: bottle
+    x: 4.6
+    y: -0.8
+    thermal_delta_c: 1.5
+    radius_m: 0.15
+    expected: confirm_waste
+  - id: glare_001
+    type: glare
+    x: 6.5
+    y: 1.2
+    thermal_delta_c: 0.75
+    radius_m: 0.30
+    expected: reject_or_ignore

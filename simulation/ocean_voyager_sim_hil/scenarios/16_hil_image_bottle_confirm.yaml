@@ -1,0 +1,34 @@
+scenario_name: hil_image_bottle_confirm
+pool:
+  length_m: 4.0
+  width_m: 2.5
+  wall_margin_m: 0.25
+robot:
+  start_x: 0.8
+  start_y: 1.25
+  start_heading_deg: 0
+objects:
+  - id: bottle_hil_01
+    type: bottle
+    x: 2.2
+    y: 1.25
+    thermal_delta_c: 1.6
+    radius_m: 0.15
+image_playback:
+  repeat_last: true
+  frames:
+    - camera: front
+      image_path: assets/test_images/positives/plastic/plastic_001.jpg
+      expected: target
+      category: plastic
+      instruction: "Bottle/plastic image 1: target should be confirmed as waste."
+    - camera: front
+      image_path: assets/test_images/positives/plastic/plastic_002.jpg
+      expected: target
+      category: plastic
+      instruction: "Bottle/plastic image 2: target should be confirmed as waste."
+    - camera: front
+      image_path: assets/test_images/positives/plastic/plastic_003.jpg
+      expected: target
+      category: plastic
+      instruction: "Bottle/plastic image 3: target should be confirmed as waste."

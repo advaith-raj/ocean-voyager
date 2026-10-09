@@ -1,0 +1,27 @@
+runtime:
+  mode: stationary_hil
+sources:
+  thermal: sim
+  camera: real_camera_array
+  motors: log_only
+sensors:
+  thermal:
+    max_range_m: 4.0
+    fov_deg: 55
+    threshold_delta_c: 0.25
+  camera:
+    width: 640
+    height: 480
+    fps: 10
+    front_device: 0
+    left_device: 1
+    right_device: 2
+mission:
+  hil_steps: 5
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.50
+  verify_distance_m: 0.75
+vision_model:
+  type: mock
+logging:
+  base_output_dir: outputs

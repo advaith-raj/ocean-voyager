@@ -1,0 +1,24 @@
+scenario_name: 06_bottle_plus_seaweed
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_01
+    type: bottle
+    x: 6.4
+    y: 2.7
+    thermal_delta_c: 1.6
+    radius_m: 0.15
+    image: assets/bottle/bottle_01.jpg
+  - id: seaweed_01
+    type: seaweed
+    x: 4.2
+    y: 1.8
+    thermal_delta_c: 0.9
+    radius_m: 0.15
+    image: assets/seaweed/seaweed_01.jpg

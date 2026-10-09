@@ -1,0 +1,12 @@
+camera_array:
+  camera_ids: [front, left, right]
+  frame_width: 640
+  frame_height: 480
+  fps: 10
+  fov_deg: 70
+  max_detection_range_m: 4.0
+  latency_ms: 100
+  mount_angles_deg:
+    front: 0
+    left: 75
+    right: -75

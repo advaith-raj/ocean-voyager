@@ -1,0 +1,23 @@
+Ocean Voyager Raspberry Pi snapshot
+
+Includes:
+- project source code
+- configs
+- scripts
+- patched thermal adapter
+- AI Camera / rpicam support
+- vision burst test script
+- combined thermal + vision test outputs
+- thermal bring-up outputs
+- camera and YOLO outputs
+
+Excluded:
+- .venv
+- .venv_cpu
+- Python caches
+- pip caches
+
+Recreate environment using:
+python3 -m venv --system-site-packages .venv_cpu
+source .venv_cpu/bin/activate
+pip install --no-cache-dir --no-deps ultralytics ultralytics-thop

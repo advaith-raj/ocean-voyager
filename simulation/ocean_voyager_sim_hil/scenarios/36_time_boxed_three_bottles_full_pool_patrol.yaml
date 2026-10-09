@@ -1,0 +1,55 @@
+scenario_name: 36_time_boxed_three_bottles_full_pool_patrol
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+mission:
+  objective: time_boxed_patrol
+  max_steps: 1300
+  max_time_sec: 390
+  return_home_enabled: true
+  return_home_after_time_sec: 390
+  required_path_coverage_percent: 120
+  cumulative_path_coverage_target_percent: 150
+  keep_patrolling_until_time_expires: true
+  repeat_lawnmower_after_complete: true
+  skip_covered_waypoints: false
+  continue_after_confirming_objects: true
+  max_confirmed: 99
+  scan_every_steps: 3
+  lane_spacing_m: 0.85
+  coverage_safety_offset_m: 0.35
+objects:
+  - id: bottle_top_edge_001
+    type: bottle
+    x: 2.1
+    y: 1.85
+    thermal_delta_c: 1.7
+    radius_m: 0.15
+    expected: confirm_waste
+  - id: bottle_middle_001
+    type: bottle
+    x: 3.8
+    y: 0.05
+    thermal_delta_c: 1.7
+    radius_m: 0.15
+    expected: confirm_waste
+  - id: bottle_bottom_far_001
+    type: bottle
+    x: 6.9
+    y: -1.75
+    thermal_delta_c: 1.7
+    radius_m: 0.15
+    expected: confirm_waste

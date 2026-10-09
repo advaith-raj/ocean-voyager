@@ -1,0 +1,17 @@
+scenario_name: 04_bottle_far_range_limit
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_far
+    type: bottle
+    x: 9.2
+    y: 2.5
+    thermal_delta_c: 1.6
+    radius_m: 0.15
+    image: assets/bottle/bottle_far.jpg

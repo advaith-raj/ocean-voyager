@@ -1,0 +1,7 @@
+# Ocean Voyager v45 - Python dependencies
+#
+# Cross-platform packages used by the physical pool controller.
+# Raspberry Pi hardware packages are documented separately in pool_pi.txt.
+
+numpy>=1.24
+ultralytics>=8.0

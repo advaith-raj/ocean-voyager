@@ -1,0 +1,60 @@
+runtime:
+  mode: thermal_bringup
+sources:
+  thermal: real_mlx90640
+  camera: sim
+  motors: log_only
+
+device_bus:
+  enabled: true
+  dir_name: device_bus
+  run_mode: thermal_only_bringup
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - thermal
+    - motors
+    - vision_model
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true
+
+sensors:
+  thermal:
+    model: mlx90640
+    i2c_bus: 1
+    i2c_frequency: 100000
+    resolution_w: 32
+    resolution_h: 24
+    fov_x_deg: 55
+    fov_y_deg: 35
+    fov_deg: 55
+    threshold_delta_c: 2.0
+    min_detectable_delta_c: 0.35
+    min_blob_pixels: 8
+    refresh_rate_hz: 1
+    read_retries: 8
+    retry_delay_sec: 0.25
+  camera:
+    camera_ids: [front, left, right]
+    frame_width: 640
+    frame_height: 480
+    fov_deg: 70
+    max_range_m: 4.0
+    mount_angles_deg:
+      front: 0
+      left: 75
+      right: -75
+
+motors:
+  arm_real_motors: false
+  neutral_pwm_us: 1500
+
+vision_model:
+  type: mock
+
+logging:
+  base_output_dir: outputs/hardware_bringup

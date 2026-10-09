@@ -1,0 +1,17 @@
+scenario_name: 11_low_vision_confidence
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_far_conf
+    type: bottle
+    x: 6.9
+    y: 2.2
+    thermal_delta_c: 1.2
+    radius_m: 0.15
+    image: assets/bottle/bottle_far_conf.jpg

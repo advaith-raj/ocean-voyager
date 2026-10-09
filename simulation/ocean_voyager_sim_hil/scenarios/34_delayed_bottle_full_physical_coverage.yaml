@@ -1,0 +1,30 @@
+scenario_name: 34_delayed_bottle_full_physical_coverage
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+mission:
+  max_steps: 540
+  return_home_after_time_sec: 9999
+  required_path_coverage_percent: 70
+  continue_after_confirming_objects: true
+objects:
+- id: bottle_delayed_mid_001
+  type: bottle
+  x: 5.8
+  y: -1.55
+  thermal_delta_c: 1.7
+  radius_m: 0.15
+  expected: delayed_confirm_then_continue_survey

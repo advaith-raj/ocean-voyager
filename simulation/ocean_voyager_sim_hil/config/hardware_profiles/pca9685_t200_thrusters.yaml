@@ -1,0 +1,22 @@
+thrusters:
+  controller: pca9685
+  model: blue_robotics_t200_pair
+  pwm_min_us: 1100
+  pwm_neutral_us: 1500
+  pwm_max_us: 1900
+  battery_voltage_v: 12.0
+  left_channel: 0
+  right_channel: 1
+  left_inverted: false
+  right_inverted: false
+  command_limit_forward: 0.35
+  command_limit_yaw: 0.30
+motion_model:
+  boat_mass_kg: 4.5
+  thruster_spacing_m: 0.38
+  max_speed_mps: 0.45
+  max_yaw_rate_dps: 55
+  thrust_deadband: 0.06
+  acceleration_lag_s: 0.45
+  linear_drag_coeff: 1.8
+  angular_drag_coeff: 0.9

@@ -1,0 +1,32 @@
+scenario_name: 25_pool_start_near_corner_return_home
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 7.8
+    y_min: -0.6
+    y_max: 4.4
+  wall_margin_m: 0.25
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 25.0
+objects:
+  - id: bottle_corner_001
+    type: bottle
+    x: 1.6
+    y: 0.9
+    thermal_delta_c: 1.5
+    radius_m: 0.15
+    expected: confirm_waste
+  - id: seaweed_corner_001
+    type: seaweed
+    x: 2.6
+    y: 1.8
+    thermal_delta_c: 0.9
+    radius_m: 0.25
+    expected: reject_false_positive

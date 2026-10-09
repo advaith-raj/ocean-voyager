@@ -1,0 +1,31 @@
+scenario_name: 32_low_delta_becomes_detectable_when_close
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+mission:
+  return_home_after_time_sec: 9999
+  max_steps: 500
+  required_path_coverage_percent: 58
+  continue_after_confirming_objects: true
+  hardware_faithful_thermal: true
+objects:
+- id: bottle_low_delta_delayed_001
+  type: bottle
+  x: 3.8
+  y: -1.25
+  thermal_delta_c: 1.05
+  radius_m: 0.15
+  expected: low_delta_detectable_only_when_close

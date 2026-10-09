@@ -1,0 +1,192 @@
+[   6.289s | event Δ  6.289s] VISION active: /home/voyager/robot/ocean_voyager_sim_hil_build_0_5_10/models/best.pt
+[   6.291s | event Δ  0.002s] START v45 stochastic navigation seed=5707273491074745874 vision=active thermal=active target_max=5.0s cooldown=30.0s
+[   6.291s | event Δ  0.000s] NORMAL_BANK F=0.70,2.0,12.0 L=0.07,1.0,6.0 R=0.17,1.0,6.0 P=0.06,0.2,4.0
+[   6.292s | event Δ  0.001s] COLLISION_BANK L=0.15,0.5,6.0 R=0.45,1.0,6.0 P=0.40,0.5,3.0
+[   6.292s | event Δ  0.000s] MOTOR epoch=1 -> FORWARD | NORMAL_RANDOM requested=2.098s draw=0.019970 | mission start
+[   6.293s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=2.098s draw=0.019970
+[   6.502s | event Δ  0.209s] THERMAL active polarity=warm
+[  13.099s | event Δ  6.597s] RGB_OBS t=6.281 file=rgb_obs_00006.281.jpg strength=WEAK conf=0.287 box=[298.4, 190.6, 334.3, 264.8] bearing=-0.3 area=0.0087 | TH=t=12.942 file=thermal_00012.942.png raw=thermal_00012.942.npy delta=3.63C bearing=+19.9
+[  13.100s | event Δ  0.001s] THERMAL_OBS t=12.942 file=thermal_00012.942.png raw=thermal_00012.942.npy delta=3.63C bearing=+19.9 | RGB=t=6.281 file=rgb_obs_00006.281.jpg conf=0.287 bearing=-0.3
+[  14.918s | event Δ  1.819s] RGB_OBS t=13.080 file=rgb_obs_00013.080.jpg strength=STRONG conf=0.530 box=[372.5, 179.9, 412.3, 261.7] bearing=+6.2 area=0.0106 | TH=t=12.942 file=thermal_00012.942.png raw=thermal_00012.942.npy delta=3.63C bearing=+19.3
+[  14.918s | event Δ  0.000s] THERMAL_OBS t=12.942 file=thermal_00012.942.png raw=thermal_00012.942.npy delta=3.63C bearing=+19.3 | RGB=t=13.080 file=rgb_obs_00013.080.jpg conf=0.530 bearing=+6.2
+[  14.919s | event Δ  0.000s] FUSED_CANDIDATE RGB={t=13.080,file=rgb_obs_00013.080.jpg,conf=0.530,bearing=+6.2,area=0.0106} TH={t=12.942,file=thermal_00012.942.png,delta=3.63C,bearing=+19.3} decision=PURSUIT
+[  14.919s | event Δ  0.000s] MOTOR epoch=2 -> OFF | target takeover
+[  16.758s | event Δ  1.839s] RGB_OBS t=14.877 file=rgb_obs_00014.877.jpg strength=STRONG conf=0.767 box=[558.2, 151.4, 613.5, 255.6] bearing=+22.8 area=0.0188 | TH=t=15.992 file=thermal_00015.992.png raw=thermal_00015.992.npy delta=15.21C bearing=+19.8
+[  16.759s | event Δ  0.001s] THERMAL_OBS t=15.992 file=thermal_00015.992.png raw=thermal_00015.992.npy delta=15.21C bearing=+19.8 | RGB=t=14.877 file=rgb_obs_00014.877.jpg conf=0.767 bearing=+22.8
+[  16.759s | event Δ  0.000s] MOTOR epoch=3 -> TURN_RIGHT | target steer e=+0.831
+[  18.554s | event Δ  1.795s] RGB_OBS t=16.679 file=rgb_obs_00016.679.jpg hit=NONE | TH=t=18.027 file=thermal_00018.027.png raw=thermal_00018.027.npy delta=15.71C bearing=+20.5
+[  18.555s | event Δ  0.001s] THERMAL_OBS t=18.027 file=thermal_00018.027.png raw=thermal_00018.027.npy delta=15.71C bearing=+20.5 | RGB=NONE
+[  18.555s | event Δ  0.000s] TARGET_LOST -> mandatory cooldown/random navigation
+[  18.556s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=TURN_RIGHT requested=1.971s draw=0.929045
+[  20.401s | event Δ  1.846s] RGB_OBS t=18.476 file=rgb_obs_00018.476.jpg hit=NONE | TH=t=19.039 file=thermal_00019.039.png raw=thermal_00019.039.npy delta=16.55C bearing=+20.4
+[  20.402s | event Δ  0.001s] THERMAL_OBS t=19.039 file=thermal_00019.039.png raw=thermal_00019.039.npy delta=16.55C bearing=+20.4 | RGB=NONE
+[  22.207s | event Δ  1.805s] RGB_OBS t=20.375 file=rgb_obs_00020.375.jpg hit=NONE | TH=t=20.057 file=thermal_00020.057.png raw=thermal_00020.057.npy delta=15.19C bearing=+19.8
+[  22.208s | event Δ  0.001s] THERMAL_OBS t=20.057 file=thermal_00020.057.png raw=thermal_00020.057.npy delta=15.19C bearing=+19.8 | RGB=NONE
+[  24.306s | event Δ  2.098s] RGB_OBS t=22.176 file=rgb_obs_00022.176.jpg strength=STRONG conf=0.869 box=[574.8, 141.3, 640.0, 270.7] bearing=+24.7 area=0.0275 | TH=t=22.090 file=thermal_00022.090.png raw=thermal_00022.090.npy delta=11.05C bearing=+18.5
+[  24.307s | event Δ  0.001s] THERMAL_OBS t=22.090 file=thermal_00022.090.png raw=thermal_00022.090.npy delta=11.05C bearing=+18.5 | RGB=t=22.176 file=rgb_obs_00022.176.jpg conf=0.869 bearing=+24.7
+[  24.307s | event Δ  0.000s] FUSED_SUPPRESSED cooldown_remaining=24.54s RGB=0.869 TH=11.05C
+[  26.200s | event Δ  1.893s] RGB_OBS t=24.274 file=rgb_obs_00024.274.jpg strength=STRONG conf=0.910 box=[351.2, 168.8, 402.6, 285.9] bearing=+4.9 area=0.0196 | TH=NONE
+[  26.201s | event Δ  0.002s] MOTOR epoch=4 -> FORWARD | NORMAL_RANDOM requested=8.886s draw=0.128391 | random action complete
+[  26.202s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=8.886s draw=0.128391
+[  27.983s | event Δ  1.781s] RGB_OBS t=26.174 file=rgb_obs_00026.174.jpg strength=STRONG conf=0.896 box=[76.8, 187.9, 140.6, 325.1] bearing=-18.2 area=0.0285 | TH=NONE
+[  29.795s | event Δ  1.812s] RGB_OBS t=27.974 file=rgb_obs_00027.974.jpg hit=NONE | TH=t=29.202 file=thermal_00029.202.png raw=thermal_00029.202.npy delta=6.92C bearing=+21.9
+[  29.796s | event Δ  0.001s] THERMAL_OBS t=29.202 file=thermal_00029.202.png raw=thermal_00029.202.npy delta=6.92C bearing=+21.9 | RGB=NONE
+[  31.609s | event Δ  1.813s] RGB_OBS t=29.773 file=rgb_obs_00029.773.jpg hit=NONE | TH=t=30.217 file=thermal_00030.217.png raw=thermal_00030.217.npy delta=6.71C bearing=+19.6
+[  31.610s | event Δ  0.000s] THERMAL_OBS t=30.217 file=thermal_00030.217.png raw=thermal_00030.217.npy delta=6.71C bearing=+19.6 | RGB=NONE
+[  33.402s | event Δ  1.792s] RGB_OBS t=31.575 file=rgb_obs_00031.575.jpg hit=NONE | TH=t=32.250 file=thermal_00032.250.png raw=thermal_00032.250.npy delta=5.96C bearing=+18.9
+[  33.404s | event Δ  0.002s] THERMAL_OBS t=32.250 file=thermal_00032.250.png raw=thermal_00032.250.npy delta=5.96C bearing=+18.9 | RGB=NONE
+[  35.241s | event Δ  1.838s] RGB_OBS t=33.375 file=rgb_obs_00033.375.jpg hit=NONE | TH=t=33.271 file=thermal_00033.271.png raw=thermal_00033.271.npy delta=6.69C bearing=+19.3
+[  35.242s | event Δ  0.000s] THERMAL_OBS t=33.271 file=thermal_00033.271.png raw=thermal_00033.271.npy delta=6.69C bearing=+19.3 | RGB=NONE
+[  37.050s | event Δ  1.808s] RGB_OBS t=35.175 file=rgb_obs_00035.175.jpg hit=NONE | TH=t=36.315 file=thermal_00036.315.png raw=thermal_00036.315.npy delta=6.68C bearing=+19.1
+[  37.051s | event Δ  0.001s] THERMAL_OBS t=36.315 file=thermal_00036.315.png raw=thermal_00036.315.npy delta=6.68C bearing=+19.1 | RGB=NONE
+[  37.051s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=2.168s draw=0.420054
+[  38.931s | event Δ  1.880s] RGB_OBS t=36.973 file=rgb_obs_00036.973.jpg hit=NONE | TH=t=36.315 file=thermal_00036.315.png raw=thermal_00036.315.npy delta=6.68C bearing=+14.9
+[  38.932s | event Δ  0.001s] THERMAL_OBS t=36.315 file=thermal_00036.315.png raw=thermal_00036.315.npy delta=6.68C bearing=+14.9 | RGB=NONE
+[  40.739s | event Δ  1.808s] RGB_OBS t=38.871 file=rgb_obs_00038.871.jpg hit=NONE | TH=NONE
+[  42.497s | event Δ  1.757s] RGB_OBS t=40.673 file=rgb_obs_00040.673.jpg hit=NONE | TH=NONE
+[  42.498s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=5.771s draw=0.145512
+[  44.279s | event Δ  1.781s] RGB_OBS t=42.476 file=rgb_obs_00042.476.jpg hit=NONE | TH=NONE
+[  46.108s | event Δ  1.829s] RGB_OBS t=44.270 file=rgb_obs_00044.270.jpg hit=NONE | TH=NONE
+[  47.910s | event Δ  1.803s] RGB_OBS t=46.073 file=rgb_obs_00046.073.jpg hit=NONE | TH=NONE
+[  49.714s | event Δ  1.804s] RGB_OBS t=47.869 file=rgb_obs_00047.869.jpg hit=NONE | TH=NONE
+[  51.515s | event Δ  1.801s] RGB_OBS t=49.676 file=rgb_obs_00049.676.jpg strength=STRONG conf=0.856 box=[288.1, 135.1, 395.4, 331.8] bearing=+1.9 area=0.0687 | TH=t=50.541 file=thermal_00050.541.png raw=thermal_00050.541.npy delta=3.28C bearing=+19.6
+[  51.516s | event Δ  0.000s] THERMAL_OBS t=50.541 file=thermal_00050.541.png raw=thermal_00050.541.npy delta=3.28C bearing=+19.6 | RGB=t=49.676 file=rgb_obs_00049.676.jpg conf=0.856 bearing=+1.9
+[  51.527s | event Δ  0.011s] FUSED_CANDIDATE RGB={t=49.676,file=rgb_obs_00049.676.jpg,conf=0.856,bearing=+1.9,area=0.0687} TH={t=50.541,file=thermal_00050.541.png,delta=3.28C,bearing=+19.6} decision=PURSUIT
+[  51.527s | event Δ  0.000s] MOTOR epoch=5 -> OFF | target takeover
+[  53.345s | event Δ  1.818s] RGB_OBS t=51.468 file=rgb_obs_00051.468.jpg hit=NONE | TH=t=51.557 file=thermal_00051.557.png raw=thermal_00051.557.npy delta=1.33C bearing=+19.2
+[  53.346s | event Δ  0.001s] THERMAL_OBS t=51.557 file=thermal_00051.557.png raw=thermal_00051.557.npy delta=1.33C bearing=+19.2 | RGB=NONE
+[  53.346s | event Δ  0.000s] TARGET_LOST -> mandatory cooldown/random navigation
+[  53.347s | event Δ  0.000s] MOTOR epoch=6 -> FORWARD | NORMAL_RANDOM requested=11.362s draw=0.256438 | target lost
+[  53.347s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=11.362s draw=0.256438
+[  55.151s | event Δ  1.805s] RGB_OBS t=53.270 file=rgb_obs_00053.270.jpg hit=NONE | TH=t=53.590 file=thermal_00053.590.png raw=thermal_00053.590.npy delta=4.43C bearing=+17.9
+[  55.152s | event Δ  0.001s] THERMAL_OBS t=53.590 file=thermal_00053.590.png raw=thermal_00053.590.npy delta=4.43C bearing=+17.9 | RGB=NONE
+[  56.935s | event Δ  1.783s] RGB_OBS t=55.064 file=rgb_obs_00055.064.jpg hit=NONE | TH=NONE
+[  58.695s | event Δ  1.760s] RGB_OBS t=56.868 file=rgb_obs_00056.868.jpg hit=NONE | TH=NONE
+[  60.506s | event Δ  1.811s] RGB_OBS t=58.663 file=rgb_obs_00058.663.jpg hit=NONE | TH=NONE
+[  62.311s | event Δ  1.806s] RGB_OBS t=60.466 file=rgb_obs_00060.466.jpg hit=NONE | TH=NONE
+[  64.111s | event Δ  1.800s] RGB_OBS t=62.263 file=rgb_obs_00062.263.jpg hit=NONE | TH=t=61.720 file=thermal_00061.720.png raw=thermal_00061.720.npy delta=3.41C bearing=+21.6
+[  64.112s | event Δ  0.000s] THERMAL_OBS t=61.720 file=thermal_00061.720.png raw=thermal_00061.720.npy delta=3.41C bearing=+21.6 | RGB=NONE
+[  65.905s | event Δ  1.793s] RGB_OBS t=64.063 file=rgb_obs_00064.063.jpg hit=NONE | TH=NONE
+[  67.676s | event Δ  1.771s] RGB_OBS t=65.869 file=rgb_obs_00065.869.jpg hit=NONE | TH=NONE
+[  67.676s | event Δ  0.001s] MOTOR epoch=7 -> OFF | NORMAL_RANDOM requested=0.317s draw=0.959468 | random action complete
+[  67.677s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=OFF requested=0.317s draw=0.959468
+[  69.474s | event Δ  1.797s] RGB_OBS t=67.663 file=rgb_obs_00067.663.jpg hit=NONE | TH=NONE
+[  71.290s | event Δ  1.816s] RGB_OBS t=69.465 file=rgb_obs_00069.465.jpg hit=NONE | TH=NONE
+[  71.290s | event Δ  0.000s] MOTOR epoch=8 -> FORWARD | NORMAL_RANDOM requested=8.816s draw=0.341042 | random action complete
+[  71.290s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=8.816s draw=0.341042
+[  73.095s | event Δ  1.805s] RGB_OBS t=71.261 file=rgb_obs_00071.261.jpg hit=NONE | TH=NONE
+[  74.893s | event Δ  1.798s] RGB_OBS t=73.060 file=rgb_obs_00073.060.jpg hit=NONE | TH=NONE
+[  76.707s | event Δ  1.814s] RGB_OBS t=74.861 file=rgb_obs_00074.861.jpg strength=STRONG conf=0.492 box=[138.4, 155.4, 236.5, 345.5] bearing=-11.4 area=0.0607 | TH=NONE
+[  78.547s | event Δ  1.840s] RGB_OBS t=76.663 file=rgb_obs_00076.663.jpg hit=NONE | TH=t=76.961 file=thermal_00076.961.png raw=thermal_00076.961.npy delta=2.49C bearing=+19.7
+[  78.548s | event Δ  0.001s] THERMAL_OBS t=76.961 file=thermal_00076.961.png raw=thermal_00076.961.npy delta=2.49C bearing=+19.7 | RGB=NONE
+[  80.372s | event Δ  1.825s] RGB_OBS t=78.459 file=rgb_obs_00078.459.jpg hit=NONE | TH=t=80.010 file=thermal_00080.010.png raw=thermal_00080.010.npy delta=6.88C bearing=+20.3
+[  80.373s | event Δ  0.000s] THERMAL_OBS t=80.010 file=thermal_00080.010.png raw=thermal_00080.010.npy delta=6.88C bearing=+20.3 | RGB=NONE
+[  82.139s | event Δ  1.766s] RGB_OBS t=80.359 file=rgb_obs_00080.359.jpg hit=NONE | TH=t=80.010 file=thermal_00080.010.png raw=thermal_00080.010.npy delta=6.88C bearing=+21.5
+[  82.140s | event Δ  0.001s] THERMAL_OBS t=80.010 file=thermal_00080.010.png raw=thermal_00080.010.npy delta=6.88C bearing=+21.5 | RGB=NONE
+[  82.141s | event Δ  0.001s] MOTOR epoch=9 -> TURN_LEFT | NORMAL_RANDOM requested=3.915s draw=0.762687 | random action complete
+[  82.142s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=TURN_LEFT requested=3.915s draw=0.762687
+[  83.963s | event Δ  1.821s] RGB_OBS t=82.064 file=rgb_obs_00082.064.jpg hit=NONE | TH=NONE
+[  85.733s | event Δ  1.769s] RGB_OBS t=83.958 file=rgb_obs_00083.958.jpg hit=NONE | TH=NONE
+[  87.543s | event Δ  1.810s] RGB_OBS t=85.659 file=rgb_obs_00085.659.jpg hit=NONE | TH=NONE
+[  89.370s | event Δ  1.828s] RGB_OBS t=87.458 file=rgb_obs_00087.458.jpg hit=NONE | TH=NONE
+[  89.371s | event Δ  0.001s] MOTOR epoch=10 -> FORWARD | NORMAL_RANDOM requested=5.825s draw=0.228772 | random action complete
+[  89.371s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=5.825s draw=0.228772
+[  91.161s | event Δ  1.789s] RGB_OBS t=89.355 file=rgb_obs_00089.355.jpg hit=NONE | TH=NONE
+[  92.988s | event Δ  1.827s] RGB_OBS t=91.155 file=rgb_obs_00091.155.jpg hit=NONE | TH=NONE
+[  94.810s | event Δ  1.821s] RGB_OBS t=92.955 file=rgb_obs_00092.955.jpg hit=NONE | TH=t=93.221 file=thermal_00093.221.png raw=thermal_00093.221.npy delta=1.84C bearing=+19.5
+[  94.810s | event Δ  0.001s] THERMAL_OBS t=93.221 file=thermal_00093.221.png raw=thermal_00093.221.npy delta=1.84C bearing=+19.5 | RGB=NONE
+[  96.663s | event Δ  1.852s] RGB_OBS t=94.754 file=rgb_obs_00094.754.jpg hit=NONE | TH=t=95.250 file=thermal_00095.250.png raw=thermal_00095.250.npy delta=7.47C bearing=+18.9
+[  96.663s | event Δ  0.000s] THERMAL_OBS t=95.250 file=thermal_00095.250.png raw=thermal_00095.250.npy delta=7.47C bearing=+18.9 | RGB=NONE
+[  98.469s | event Δ  1.806s] RGB_OBS t=96.654 file=rgb_obs_00096.654.jpg strength=STRONG conf=0.684 box=[488.2, 135.4, 560.4, 294.8] bearing=+17.6 area=0.0374 | TH=t=95.250 file=thermal_00095.250.png raw=thermal_00095.250.npy delta=7.47C bearing=+18.9
+[  98.470s | event Δ  0.001s] THERMAL_OBS t=95.250 file=thermal_00095.250.png raw=thermal_00095.250.npy delta=7.47C bearing=+18.9 | RGB=t=96.654 file=rgb_obs_00096.654.jpg conf=0.684 bearing=+17.6
+[  98.470s | event Δ  0.000s] FUSED_CANDIDATE RGB={t=96.654,file=rgb_obs_00096.654.jpg,conf=0.684,bearing=+17.6,area=0.0374} TH={t=95.250,file=thermal_00095.250.png,delta=7.47C,bearing=+18.9} decision=PURSUIT
+[  98.470s | event Δ  0.000s] MOTOR epoch=11 -> OFF | target takeover
+[ 100.276s | event Δ  1.806s] RGB_OBS t=98.453 file=rgb_obs_00098.453.jpg hit=NONE | TH=NONE
+[ 100.277s | event Δ  0.000s] TARGET_LOST -> mandatory cooldown/random navigation
+[ 100.277s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=OFF requested=3.580s draw=0.962791
+[ 102.118s | event Δ  1.841s] RGB_OBS t=100.252 file=rgb_obs_00100.252.jpg hit=NONE | TH=NONE
+[ 103.902s | event Δ  1.784s] RGB_OBS t=102.055 file=rgb_obs_00102.055.jpg hit=NONE | TH=NONE
+[ 105.662s | event Δ  1.760s] RGB_OBS t=103.853 file=rgb_obs_00103.853.jpg hit=NONE | TH=NONE
+[ 105.662s | event Δ  0.001s] MOTOR epoch=12 -> FORWARD | NORMAL_RANDOM requested=5.784s draw=0.449951 | random action complete
+[ 105.663s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=5.784s draw=0.449951
+[ 107.446s | event Δ  1.784s] RGB_OBS t=105.651 file=rgb_obs_00105.651.jpg hit=NONE | TH=NONE
+[ 109.301s | event Δ  1.855s] RGB_OBS t=107.351 file=rgb_obs_00107.351.jpg hit=NONE | TH=NONE
+[ 111.140s | event Δ  1.838s] RGB_OBS t=109.255 file=rgb_obs_00109.255.jpg hit=NONE | TH=NONE
+[ 112.936s | event Δ  1.796s] RGB_OBS t=111.049 file=rgb_obs_00111.049.jpg hit=NONE | TH=t=111.510 file=thermal_00111.510.png raw=thermal_00111.510.npy delta=2.79C bearing=+15.7
+[ 112.936s | event Δ  0.000s] THERMAL_OBS t=111.510 file=thermal_00111.510.png raw=thermal_00111.510.npy delta=2.79C bearing=+15.7 | RGB=NONE
+[ 114.743s | event Δ  1.807s] RGB_OBS t=112.852 file=rgb_obs_00112.852.jpg hit=NONE | TH=t=111.510 file=thermal_00111.510.png raw=thermal_00111.510.npy delta=2.79C bearing=+15.7
+[ 114.744s | event Δ  0.001s] THERMAL_OBS t=111.510 file=thermal_00111.510.png raw=thermal_00111.510.npy delta=2.79C bearing=+15.7 | RGB=NONE
+[ 114.745s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=7.319s draw=0.102116
+[ 116.566s | event Δ  1.821s] RGB_OBS t=114.653 file=rgb_obs_00114.653.jpg hit=NONE | TH=NONE
+[ 118.409s | event Δ  1.844s] RGB_OBS t=116.546 file=rgb_obs_00116.546.jpg hit=NONE | TH=NONE
+[ 120.240s | event Δ  1.830s] RGB_OBS t=118.352 file=rgb_obs_00118.352.jpg hit=NONE | TH=t=118.622 file=thermal_00118.622.png raw=thermal_00118.622.npy delta=2.31C bearing=+21.6
+[ 120.240s | event Δ  0.001s] THERMAL_OBS t=118.622 file=thermal_00118.622.png raw=thermal_00118.622.npy delta=2.31C bearing=+21.6 | RGB=NONE
+[ 122.092s | event Δ  1.852s] RGB_OBS t=120.150 file=rgb_obs_00120.150.jpg hit=NONE | TH=t=118.622 file=thermal_00118.622.png raw=thermal_00118.622.npy delta=2.31C bearing=+21.6
+[ 122.093s | event Δ  0.000s] THERMAL_OBS t=118.622 file=thermal_00118.622.png raw=thermal_00118.622.npy delta=2.31C bearing=+21.6 | RGB=NONE
+[ 123.918s | event Δ  1.825s] RGB_OBS t=122.049 file=rgb_obs_00122.049.jpg strength=STRONG conf=0.896 box=[83.4, 169.0, 184.2, 359.8] bearing=-16.0 area=0.0626 | TH=t=123.701 file=thermal_00123.701.png raw=thermal_00123.701.npy delta=2.42C bearing=+18.4
+[ 123.918s | event Δ  0.001s] THERMAL_OBS t=123.701 file=thermal_00123.701.png raw=thermal_00123.701.npy delta=2.42C bearing=+18.4 | RGB=t=122.049 file=rgb_obs_00122.049.jpg conf=0.896 bearing=-16.0
+[ 123.918s | event Δ  0.000s] MOTOR epoch=13 -> TURN_RIGHT | NORMAL_RANDOM requested=3.060s draw=0.791492 | random action complete
+[ 123.919s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=TURN_RIGHT requested=3.060s draw=0.791492
+[ 125.709s | event Δ  1.790s] RGB_OBS t=123.851 file=rgb_obs_00123.851.jpg hit=NONE | TH=t=123.701 file=thermal_00123.701.png raw=thermal_00123.701.npy delta=2.42C bearing=+19.7
+[ 125.709s | event Δ  0.000s] THERMAL_OBS t=123.701 file=thermal_00123.701.png raw=thermal_00123.701.npy delta=2.42C bearing=+19.7 | RGB=NONE
+[ 127.578s | event Δ  1.869s] RGB_OBS t=125.646 file=rgb_obs_00125.646.jpg hit=NONE | TH=t=126.748 file=thermal_00126.748.png raw=thermal_00126.748.npy delta=10.45C bearing=+18.8
+[ 127.579s | event Δ  0.001s] THERMAL_OBS t=126.748 file=thermal_00126.748.png raw=thermal_00126.748.npy delta=10.45C bearing=+18.8 | RGB=NONE
+[ 129.424s | event Δ  1.845s] RGB_OBS t=127.547 file=rgb_obs_00127.547.jpg hit=NONE | TH=t=128.784 file=thermal_00128.784.png raw=thermal_00128.784.npy delta=12.96C bearing=+18.5
+[ 129.424s | event Δ  0.001s] THERMAL_OBS t=128.784 file=thermal_00128.784.png raw=thermal_00128.784.npy delta=12.96C bearing=+18.5 | RGB=NONE
+[ 129.425s | event Δ  0.000s] MOTOR epoch=14 -> FORWARD | NORMAL_RANDOM requested=11.069s draw=0.507482 | random action complete
+[ 129.425s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=11.069s draw=0.507482
+[ 131.251s | event Δ  1.826s] RGB_OBS t=129.348 file=rgb_obs_00129.348.jpg hit=NONE | TH=t=129.798 file=thermal_00129.798.png raw=thermal_00129.798.npy delta=10.94C bearing=+19.1
+[ 131.252s | event Δ  0.000s] THERMAL_OBS t=129.798 file=thermal_00129.798.png raw=thermal_00129.798.npy delta=10.94C bearing=+19.1 | RGB=NONE
+[ 133.023s | event Δ  1.771s] RGB_OBS t=131.244 file=rgb_obs_00131.244.jpg hit=NONE | TH=t=131.829 file=thermal_00131.829.png raw=thermal_00131.829.npy delta=2.91C bearing=+20.9
+[ 133.024s | event Δ  0.001s] THERMAL_OBS t=131.829 file=thermal_00131.829.png raw=thermal_00131.829.npy delta=2.91C bearing=+20.9 | RGB=NONE
+[ 134.836s | event Δ  1.812s] RGB_OBS t=132.952 file=rgb_obs_00132.952.jpg hit=NONE | TH=t=131.829 file=thermal_00131.829.png raw=thermal_00131.829.npy delta=2.91C bearing=+20.9
+[ 134.836s | event Δ  0.001s] THERMAL_OBS t=131.829 file=thermal_00131.829.png raw=thermal_00131.829.npy delta=2.91C bearing=+20.9 | RGB=NONE
+[ 136.674s | event Δ  1.837s] RGB_OBS t=134.842 file=rgb_obs_00134.842.jpg hit=NONE | TH=t=134.878 file=thermal_00134.878.png raw=thermal_00134.878.npy delta=10.19C bearing=+17.6
+[ 136.674s | event Δ  0.001s] THERMAL_OBS t=134.878 file=thermal_00134.878.png raw=thermal_00134.878.npy delta=10.19C bearing=+17.6 | RGB=NONE
+[ 138.427s | event Δ  1.753s] RGB_OBS t=136.643 file=rgb_obs_00136.643.jpg hit=NONE | TH=t=137.927 file=thermal_00137.927.png raw=thermal_00137.927.npy delta=9.36C bearing=+13.4
+[ 138.428s | event Δ  0.001s] THERMAL_OBS t=137.927 file=thermal_00137.927.png raw=thermal_00137.927.npy delta=9.36C bearing=+13.4 | RGB=NONE
+[ 140.281s | event Δ  1.853s] RGB_OBS t=138.343 file=rgb_obs_00138.343.jpg hit=NONE | TH=t=138.942 file=thermal_00138.942.png raw=thermal_00138.942.npy delta=13.81C bearing=+21.8
+[ 140.282s | event Δ  0.001s] THERMAL_OBS t=138.942 file=thermal_00138.942.png raw=thermal_00138.942.npy delta=13.81C bearing=+21.8 | RGB=NONE
+[ 142.073s | event Δ  1.792s] RGB_OBS t=140.247 file=rgb_obs_00140.247.jpg hit=NONE | TH=t=138.942 file=thermal_00138.942.png raw=thermal_00138.942.npy delta=13.81C bearing=+21.8
+[ 142.075s | event Δ  0.001s] THERMAL_OBS t=138.942 file=thermal_00138.942.png raw=thermal_00138.942.npy delta=13.81C bearing=+21.8 | RGB=NONE
+[ 143.912s | event Δ  1.838s] RGB_OBS t=142.047 file=rgb_obs_00142.047.jpg hit=NONE | TH=NONE
+[ 143.913s | event Δ  0.001s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=4.945s draw=0.062284
+[ 145.744s | event Δ  1.831s] RGB_OBS t=143.845 file=rgb_obs_00143.845.jpg hit=NONE | TH=NONE
+[ 147.497s | event Δ  1.753s] RGB_OBS t=145.743 file=rgb_obs_00145.743.jpg hit=NONE | TH=NONE
+[ 149.315s | event Δ  1.819s] RGB_OBS t=147.440 file=rgb_obs_00147.440.jpg hit=NONE | TH=NONE
+[ 151.148s | event Δ  1.832s] RGB_OBS t=149.247 file=rgb_obs_00149.247.jpg hit=NONE | TH=NONE
+[ 151.149s | event Δ  0.002s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=9.183s draw=0.487936
+[ 152.967s | event Δ  1.818s] RGB_OBS t=151.139 file=rgb_obs_00151.139.jpg hit=NONE | TH=NONE
+[ 154.838s | event Δ  1.870s] RGB_OBS t=152.942 file=rgb_obs_00152.942.jpg hit=NONE | TH=t=154.184 file=thermal_00154.184.png raw=thermal_00154.184.npy delta=6.00C bearing=+18.0
+[ 154.839s | event Δ  0.002s] THERMAL_OBS t=154.184 file=thermal_00154.184.png raw=thermal_00154.184.npy delta=6.00C bearing=+18.0 | RGB=NONE
+[ 156.631s | event Δ  1.792s] RGB_OBS t=154.838 file=rgb_obs_00154.838.jpg hit=NONE | TH=t=154.184 file=thermal_00154.184.png raw=thermal_00154.184.npy delta=6.00C bearing=+19.8
+[ 156.631s | event Δ  0.001s] THERMAL_OBS t=154.184 file=thermal_00154.184.png raw=thermal_00154.184.npy delta=6.00C bearing=+19.8 | RGB=NONE
+[ 158.403s | event Δ  1.771s] RGB_OBS t=156.636 file=rgb_obs_00156.636.jpg hit=NONE | TH=t=158.247 file=thermal_00158.247.png raw=thermal_00158.247.npy delta=2.18C bearing=+22.8
+[ 158.403s | event Δ  0.000s] THERMAL_OBS t=158.247 file=thermal_00158.247.png raw=thermal_00158.247.npy delta=2.18C bearing=+22.8 | RGB=NONE
+[ 160.204s | event Δ  1.801s] RGB_OBS t=158.352 file=rgb_obs_00158.352.jpg strength=WEAK conf=0.259 box=[37.6, 186.1, 117.1, 359.4] bearing=-20.9 area=0.0448 | TH=t=158.247 file=thermal_00158.247.png raw=thermal_00158.247.npy delta=2.18C bearing=+22.8
+[ 160.205s | event Δ  0.000s] THERMAL_OBS t=158.247 file=thermal_00158.247.png raw=thermal_00158.247.npy delta=2.18C bearing=+22.8 | RGB=t=158.352 file=rgb_obs_00158.352.jpg conf=0.259 bearing=-20.9
+[ 162.027s | event Δ  1.822s] RGB_OBS t=160.138 file=rgb_obs_00160.138.jpg strength=STRONG conf=0.809 box=[350.2, 156.8, 421.5, 303.6] bearing=+5.7 area=0.0341 | TH=t=161.298 file=thermal_00161.298.png raw=thermal_00161.298.npy delta=3.00C bearing=+19.5
+[ 162.028s | event Δ  0.001s] THERMAL_OBS t=161.298 file=thermal_00161.298.png raw=thermal_00161.298.npy delta=3.00C bearing=+19.5 | RGB=t=160.138 file=rgb_obs_00160.138.jpg conf=0.809 bearing=+5.7
+[ 162.028s | event Δ  0.000s] FUSED_CANDIDATE RGB={t=160.138,file=rgb_obs_00160.138.jpg,conf=0.809,bearing=+5.7,area=0.0341} TH={t=161.298,file=thermal_00161.298.png,delta=3.00C,bearing=+19.5} decision=PURSUIT
+[ 162.029s | event Δ  0.000s] MOTOR epoch=15 -> OFF | target takeover
+[ 163.856s | event Δ  1.828s] RGB_OBS t=161.936 file=rgb_obs_00161.936.jpg strength=STRONG conf=0.827 box=[582.8, 113.9, 640.0, 286.4] bearing=+25.0 area=0.0321 | TH=t=161.298 file=thermal_00161.298.png raw=thermal_00161.298.npy delta=3.00C bearing=+19.5
+[ 163.857s | event Δ  0.001s] THERMAL_OBS t=161.298 file=thermal_00161.298.png raw=thermal_00161.298.npy delta=3.00C bearing=+19.5 | RGB=t=161.936 file=rgb_obs_00161.936.jpg conf=0.827 bearing=+25.0
+[ 163.857s | event Δ  0.000s] MOTOR epoch=16 -> TURN_RIGHT | target steer e=+0.911
+[ 165.712s | event Δ  1.854s] RGB_OBS t=163.837 file=rgb_obs_00163.837.jpg hit=NONE | TH=t=165.361 file=thermal_00165.361.png raw=thermal_00165.361.npy delta=8.23C bearing=+17.6
+[ 165.713s | event Δ  0.001s] THERMAL_OBS t=165.361 file=thermal_00165.361.png raw=thermal_00165.361.npy delta=8.23C bearing=+17.6 | RGB=NONE
+[ 165.713s | event Δ  0.000s] TARGET_LOST -> mandatory cooldown/random navigation
+[ 165.713s | event Δ  0.000s] MOTOR epoch=17 -> FORWARD | NORMAL_RANDOM requested=9.045s draw=0.297731 | target lost
+[ 165.713s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=FORWARD requested=9.045s draw=0.297731
+[ 167.579s | event Δ  1.865s] RGB_OBS t=165.636 file=rgb_obs_00165.636.jpg hit=NONE | TH=t=167.394 file=thermal_00167.394.png raw=thermal_00167.394.npy delta=10.05C bearing=+18.2
+[ 167.579s | event Δ  0.001s] THERMAL_OBS t=167.394 file=thermal_00167.394.png raw=thermal_00167.394.npy delta=10.05C bearing=+18.2 | RGB=NONE
+[ 169.454s | event Δ  1.875s] RGB_OBS t=167.543 file=rgb_obs_00167.543.jpg hit=NONE | TH=t=168.409 file=thermal_00168.409.png raw=thermal_00168.409.npy delta=13.41C bearing=+18.4
+[ 169.455s | event Δ  0.001s] THERMAL_OBS t=168.409 file=thermal_00168.409.png raw=thermal_00168.409.npy delta=13.41C bearing=+18.4 | RGB=NONE
+[ 171.314s | event Δ  1.859s] RGB_OBS t=169.433 file=rgb_obs_00169.433.jpg hit=NONE | TH=t=168.409 file=thermal_00168.409.png raw=thermal_00168.409.npy delta=13.41C bearing=+21.4
+[ 171.314s | event Δ  0.000s] THERMAL_OBS t=168.409 file=thermal_00168.409.png raw=thermal_00168.409.npy delta=13.41C bearing=+21.4 | RGB=NONE
+[ 173.169s | event Δ  1.855s] RGB_OBS t=171.237 file=rgb_obs_00171.237.jpg hit=NONE | TH=NONE
+[ 175.054s | event Δ  1.885s] RGB_OBS t=173.136 file=rgb_obs_00173.136.jpg hit=NONE | TH=NONE
+[ 176.881s | event Δ  1.828s] RGB_OBS t=175.031 file=rgb_obs_00175.031.jpg hit=NONE | TH=NONE
+[ 176.882s | event Δ  0.001s] MOTOR epoch=18 -> TURN_LEFT | NORMAL_RANDOM requested=3.334s draw=0.710158 | random action complete
+[ 176.882s | event Δ  0.000s] RANDOM_CHOICE bank=NORMAL action=TURN_LEFT requested=3.334s draw=0.710158
+[ 177.797s | event Δ  0.914s] MOTOR epoch=19 -> OFF | final shutdown
+[ 178.697s | event Δ  0.900s] LOG saved /home/voyager/robot/outputs/pool_v45_random_04/telemetry_20260924_082808.csv

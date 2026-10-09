@@ -1,0 +1,54 @@
+runtime:
+  mode: camera_bringup
+sources:
+  thermal: sim
+  camera: real_camera_array
+  motors: log_only
+
+device_bus:
+  enabled: true
+  dir_name: device_bus
+  run_mode: camera_only_bringup
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - camera_array
+    - motors
+    - vision_model
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true
+
+sensors:
+  thermal:
+    resolution_w: 32
+    resolution_h: 24
+    fov_deg: 55
+    threshold_delta_c: 0.35
+  camera:
+    camera_ids:
+      - front
+      - left
+      - right
+    require_all_cameras: false
+    width: 640
+    height: 480
+    frame_width: 640
+    frame_height: 480
+    fps: 10
+    front_device: 0
+    left_device: 1
+    right_device: 2
+
+motors:
+  arm_real_motors: false
+  neutral_pwm_us: 1500
+
+vision_model:
+  type: mock
+
+logging:
+  base_output_dir: outputs/hardware_bringup

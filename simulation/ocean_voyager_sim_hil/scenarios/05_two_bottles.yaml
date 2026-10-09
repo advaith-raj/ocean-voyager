@@ -1,0 +1,24 @@
+scenario_name: 05_two_bottles
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_a
+    type: bottle
+    x: 5.2
+    y: 1.4
+    thermal_delta_c: 1.7
+    radius_m: 0.15
+    image: assets/bottle/bottle_a.jpg
+  - id: bottle_b
+    type: bottle
+    x: 8.1
+    y: 3.9
+    thermal_delta_c: 1.5
+    radius_m: 0.15
+    image: assets/bottle/bottle_b.jpg

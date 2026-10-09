@@ -1,0 +1,9 @@
+PyYAML>=6.0
+matplotlib>=3.7
+pytest>=8.0
+# Optional for real trained YOLO .pt model integration:
+ultralytics>=8.0
+
+Pillow>=10.0
+
+numpy>=1.24

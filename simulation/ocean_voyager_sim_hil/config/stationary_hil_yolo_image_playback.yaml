@@ -1,0 +1,38 @@
+runtime:
+  mode: stationary_hil
+sources:
+  thermal: sim
+  camera: image_playback
+  motors: log_only
+sensors:
+  thermal:
+    max_range_m: 4.0
+    fov_deg: 55
+    threshold_delta_c: 0.25
+    scan_min_deg: -75
+    scan_max_deg: 75
+    scan_step_deg: 15
+    noise_std_c: 0.02
+    seed: 21
+  camera:
+    max_range_m: 3.5
+    fov_deg: 75
+    camera_ids: [front, left, right]
+    blank_size: [640, 480]
+    blank_color_rgb: [180, 210, 230]
+mission:
+  hil_steps: 3
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.35
+  verify_distance_m: 0.75
+vision_model:
+  type: yolo
+  model_path: models/best.pt
+  confidence_threshold: 0.35
+  target_labels:
+    - waste
+    - bottle
+    - plastic
+    - plastic_bottle
+logging:
+  base_output_dir: outputs

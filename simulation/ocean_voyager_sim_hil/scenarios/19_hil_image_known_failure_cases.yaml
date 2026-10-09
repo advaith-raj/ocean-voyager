@@ -1,0 +1,34 @@
+scenario_name: hil_image_known_failure_cases
+pool:
+  length_m: 4.0
+  width_m: 2.5
+  wall_margin_m: 0.25
+robot:
+  start_x: 0.8
+  start_y: 1.25
+  start_heading_deg: 0
+objects:
+  - id: mixed_hil_01
+    type: bottle
+    x: 2.2
+    y: 1.25
+    thermal_delta_c: 1.4
+    radius_m: 0.18
+image_playback:
+  repeat_last: true
+  frames:
+    - camera: front
+      image_path: assets/test_images/positives/plastic/plastic_004.jpg
+      expected: target
+      category: plastic_known_FN
+      instruction: "Known hard bottle case: previously missed at threshold 0.35."
+    - camera: front
+      image_path: assets/test_images/negatives/seaweed/seaweed_007.jpg
+      expected: non_target
+      category: seaweed_known_FP
+      instruction: "Known hard seaweed case: previously false-positive at threshold 0.35."
+    - camera: front
+      image_path: assets/test_images/negatives/glare/glare_001.jpg
+      expected: non_target
+      category: glare_control
+      instruction: "Glare control case: should not confirm as waste."

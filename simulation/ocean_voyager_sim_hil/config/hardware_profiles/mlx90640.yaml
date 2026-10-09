@@ -1,0 +1,11 @@
+thermal:
+  model: mlx90640_sim
+  resolution_w: 32
+  resolution_h: 24
+  fov_x_deg: 55
+  fov_y_deg: 35
+  refresh_rate_hz: 8
+  background_temp_c: 22.0
+  noise_std_c: 0.08
+  max_detection_range_m: 3.5
+  min_detectable_delta_c: 0.35

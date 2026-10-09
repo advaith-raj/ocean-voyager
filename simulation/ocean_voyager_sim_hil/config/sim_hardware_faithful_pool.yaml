@@ -1,0 +1,124 @@
+runtime:
+  mode: sim_full
+sources:
+  thermal: sim
+  camera: sim
+  motors: sim
+device_bus:
+  enabled: true
+  dir_name: device_bus
+  run_mode: simulated_peripherals_in_process
+logging:
+  base_output_dir: outputs/build_0_5_pool_runs
+sensors:
+  thermal:
+    model: mlx90640_sim
+    resolution_w: 32
+    resolution_h: 24
+    fov_x_deg: 55
+    fov_y_deg: 35
+    fov_deg: 55
+    max_detection_range_m: 3.5
+    max_range_m: 3.5
+    background_temp_c: 22.0
+    noise_std_c: 0.08
+    threshold_delta_c: 0.3
+    min_detectable_delta_c: 0.3
+    scan_min_deg: -75
+    scan_max_deg: 75
+    scan_step_deg: 15
+    seed: 13
+    min_blob_pixels: 4
+  camera:
+    camera_ids:
+    - front
+    - left
+    - right
+    frame_width: 640
+    frame_height: 480
+    fps: 10
+    fov_deg: 70
+    max_detection_range_m: 4.0
+    max_range_m: 4.0
+    latency_ms: 100
+    mount_angles_deg:
+      front: 0
+      left: 75
+      right: -75
+vision_model:
+  type: mock
+  target_labels:
+  - bottle
+  - plastic
+  - plastic_bottle
+  - waste
+  confidence_by_type:
+    bottle: 0.92
+    seaweed: 0.83
+    glare: 0.72
+mission:
+  max_steps: 420
+  max_time_sec: 180
+  return_home_enabled: true
+  return_home_after_time_sec: 9999
+  home_x: 0.0
+  home_y: 0.0
+  home_radius_m: 0.38
+  scan_every_steps: 3
+  thermal_min_confidence: 0.1
+  vision_min_confidence: 0.5
+  verify_distance_m: 0.72
+  lane_spacing_m: 1.0
+  coverage_safety_offset_m: 0.4
+  wall_guard_enabled: true
+  required_path_coverage_percent: 70
+  continue_after_confirming_objects: true
+  hardware_faithful_thermal: true
+  thermal_uncertainty_ray_m: 2.0
+  bearing_approach_forward: 0.22
+  bearing_approach_duration_s: 0.45
+  max_approach_steps: 16
+wall_guard:
+  threshold_m: 0.45
+  caution_m: 0.85
+motors:
+  controller: pca9685
+  model: blue_robotics_t200_pair
+  pwm_min_us: 1100
+  pwm_neutral_us: 1500
+  pwm_max_us: 1900
+  battery_voltage_v: 12.0
+  left_channel: 0
+  right_channel: 1
+  left_inverted: false
+  right_inverted: false
+robot_dynamics:
+  boat_mass_kg: 4.5
+  thruster_spacing_m: 0.38
+  max_speed_mps: 0.45
+  max_yaw_rate_dps: 55
+  thrust_deadband: 0.06
+  acceleration_lag_s: 0.45
+coverage_grid:
+  enabled: true
+  cell_size_m: 0.35
+  path_coverage_radius_m: 0.55
+  thermal_coverage_range_m: 3.5
+  thermal_fov_deg: 55
+  processed_object_radius_m: 0.72
+  camera_coverage_range_m: 4.0
+
+startup:
+  enabled: true
+  abort_on_failure: true
+  allow_degraded_mode: false
+  require_devices:
+    - thermal
+    - camera_array
+    - pan_servo
+    - vision_model
+    - motors
+    - wall_guard
+    - safety
+  require_emergency_stop_clear: true
+  emergency_stop_clear: true

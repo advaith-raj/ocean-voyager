@@ -1,0 +1,24 @@
+scenario_name: 07_bottle_plus_glare
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_01
+    type: bottle
+    x: 6.6
+    y: 3.1
+    thermal_delta_c: 1.6
+    radius_m: 0.15
+    image: assets/bottle/bottle_01.jpg
+  - id: glare_01
+    type: glare
+    x: 4.6
+    y: 2.1
+    thermal_delta_c: 1.1
+    radius_m: 0.15
+    image: assets/glare/glare_01.jpg

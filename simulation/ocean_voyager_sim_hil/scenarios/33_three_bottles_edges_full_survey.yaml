@@ -1,0 +1,45 @@
+scenario_name: 33_three_bottles_edges_full_survey
+coordinate_frame:
+  origin: robot_start
+  units: meters
+  heading_zero_deg: positive_x_direction
+pool:
+  layout: rectangle
+  bounds_relative_to_start:
+    x_min: -0.6
+    x_max: 8.2
+    y_min: -2.4
+    y_max: 2.4
+  wall_margin_m: 0.35
+robot:
+  start_x: 0.0
+  start_y: 0.0
+  start_heading_deg: 0.0
+mission:
+  max_steps: 540
+  return_home_after_time_sec: 9999
+  required_path_coverage_percent: 68
+  continue_after_confirming_objects: true
+  max_confirmed: 99
+objects:
+- id: bottle_top_edge_001
+  type: bottle
+  x: 2.4
+  y: 1.85
+  thermal_delta_c: 1.7
+  radius_m: 0.15
+  expected: confirm_waste
+- id: bottle_bottom_edge_001
+  type: bottle
+  x: 4.6
+  y: -1.85
+  thermal_delta_c: 1.7
+  radius_m: 0.15
+  expected: confirm_waste
+- id: bottle_far_edge_001
+  type: bottle
+  x: 7.2
+  y: 0.0
+  thermal_delta_c: 1.7
+  radius_m: 0.15
+  expected: confirm_waste

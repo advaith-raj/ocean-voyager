@@ -1,0 +1,24 @@
+runtime:
+  mode: stationary_hil
+sources:
+  thermal: real_mlx90640
+  camera: sim
+  motors: log_only
+sensors:
+  thermal:
+    i2c_bus: 1
+    max_range_m: 4.0
+    fov_deg: 55
+    threshold_delta_c: 0.25
+  camera:
+    max_range_m: 3.5
+    fov_deg: 75
+mission:
+  hil_steps: 5
+  thermal_min_confidence: 0.12
+  vision_min_confidence: 0.50
+  verify_distance_m: 0.75
+vision_model:
+  type: mock
+logging:
+  base_output_dir: outputs

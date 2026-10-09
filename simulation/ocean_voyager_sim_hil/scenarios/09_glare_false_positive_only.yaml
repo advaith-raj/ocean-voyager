@@ -1,0 +1,17 @@
+scenario_name: 09_glare_false_positive_only
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: glare_01
+    type: glare
+    x: 5.2
+    y: 2.2
+    thermal_delta_c: 1.1
+    radius_m: 0.15
+    image: assets/glare/glare_01.jpg

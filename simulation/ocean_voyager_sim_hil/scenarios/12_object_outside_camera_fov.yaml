@@ -1,0 +1,17 @@
+scenario_name: 12_object_outside_camera_fov
+pool:
+  length_m: 10.0
+  width_m: 5.0
+  wall_margin_m: 0.35
+robot:
+  start_x: 1.0
+  start_y: 2.5
+  start_heading_deg: 0
+objects:
+  - id: bottle_side
+    type: bottle
+    x: 2.0
+    y: 4.4
+    thermal_delta_c: 1.5
+    radius_m: 0.15
+    image: assets/bottle/bottle_side.jpg
